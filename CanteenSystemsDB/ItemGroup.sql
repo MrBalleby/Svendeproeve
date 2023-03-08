@@ -1,0 +1,5 @@
+﻿CREATE TABLE [dbo].[ItemGroup]
+(
+	[Id] INT NOT NULL IDENTITY PRIMARY KEY, 
+    [Title] VARCHAR(MAX) NOT NULL
+)

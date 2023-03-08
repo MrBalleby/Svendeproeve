@@ -1,0 +1,6 @@
+﻿CREATE TABLE [dbo].[Order]
+(
+	[Id] INT NOT NULL IDENTITY PRIMARY KEY, 
+    [UserId] VARCHAR(MAX) NOT NULL, 
+    [Price] DECIMAL(18, 2) NULL
+)

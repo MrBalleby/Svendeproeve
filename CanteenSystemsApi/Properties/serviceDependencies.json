@@ -1,0 +1,15 @@
+{
+  "dependencies": {
+    "mssql1": {
+      "type": "mssql",
+      "connectionId": "ConnectionStrings:CanteenSystemsDataContextConnection"
+    },
+    "mssql2": {
+      "type": "mssql",
+      "connectionId": "ConnectionStrings:CanteenSystemsApiContextConnection"
+    },
+    "apis1": {
+      "type": "apis"
+    }
+  }
+}

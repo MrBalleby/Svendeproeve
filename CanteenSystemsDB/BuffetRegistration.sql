@@ -1,0 +1,6 @@
+﻿CREATE TABLE [dbo].[BuffetRegistration]
+(
+	[Id] INT NOT NULL IDENTITY PRIMARY KEY,
+	[UserId] INT NOT NULL,
+	[DateTime] DATETIME NOT NULL
+)

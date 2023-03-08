@@ -1,0 +1,6 @@
+﻿CREATE TABLE [dbo].[BuffetMenu]
+(
+	[Id] INT NOT NULL IDENTITY PRIMARY KEY,
+	[Title] VARCHAR(500) NOT NULL,
+	[DateTime] DATETIME NOT NULL
+)

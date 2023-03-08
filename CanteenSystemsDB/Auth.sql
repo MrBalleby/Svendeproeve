@@ -1,0 +1,6 @@
+﻿CREATE TABLE [dbo].[Auth]
+(
+	[Id] INT NOT NULL IDENTITY PRIMARY KEY, 
+    [Username] VARCHAR(MAX) NOT NULL, 
+    [Password] VARCHAR(MAX) NOT NULL
+)

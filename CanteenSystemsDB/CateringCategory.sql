@@ -1,0 +1,5 @@
+﻿CREATE TABLE [dbo].[CateringCategory]
+(
+	[Id] INT NOT NULL IDENTITY PRIMARY KEY, 
+    [Title] VARCHAR(MAX) NOT NULL
+)
