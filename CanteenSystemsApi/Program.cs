@@ -7,11 +7,17 @@ using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//Konfigurer adgang til Db - Identity
+//Konfigurer adgang til Db - Identity & EF Core
 var connectionString = builder.Configuration.GetConnectionString("Default") ?? throw new InvalidOperationException("Connection string 'Default' not found.");
 builder.Services.AddDbContext<CanteenSystemsApiContext>(options => options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
+#region Sikkerhed
+
+/**
+ * Denne sektion viser at der er klargjort til implementering af Identity som sikkerhedsudbyder.
+ * Dog er dette out of scope til nuværende projekt, og vil derfor ikke implementeres yderligere.
+ */
 
 //Konfigurer Identity
 builder.Services.AddScoped<TokenProvider>();
@@ -29,7 +35,7 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("AdminOnly", policy => policy.RequireClaim("Admin"));
     options.AddPolicy("User", policy => policy.RequireClaim("User"));
 });
-
+#endregion
 
 
 // Add services to the container.
@@ -67,7 +73,9 @@ app.UseHttpsRedirection();
 
 /**
  *  WebService ruter:
- *  
+ *  Hver tilgang til webservicet kører gennem følgende ruter.
+ *  Det er opdelt i ruter for at give et større helhedsbillede, hvilket automatisk giver større overblik. 
+ *  Dette gør at det til enhver tid er nemt at tilføje nye ruter til servicet.
  */
 
 #region Services
@@ -137,7 +145,16 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.Run();
 
+/**
+ *  WebService metoder:
+ */
+
 #region ImportUsers
+/**
+ * Dette endpoint er brugt for at importere brugere til Auth tabellen,
+ * der bruges til at tjekke adgangskort i PowerAppen.
+ * Der er angivet et standard hashed password, blot for at vise at dette er muligt gennem Identity. - Til senere brug.
+ */
 static async Task<IResult> GetAllUser(CanteenSystemsApiContext context)
 {
     return TypedResults.Ok(await context.Auths.ToListAsync());
@@ -157,6 +174,10 @@ static async Task<IResult> CreateUser(IdentityUser user, CanteenSystemsApiContex
 #endregion
 
 #region RegisterBuffet
+/**
+ *  Dette er hovedfunktionen, og kernen i projektet.
+ *  Formålet med dette er at medarbejderne kan registrere sig spisenede i kantinen.
+ */
 static async Task<IResult> GetAllRegister(CanteenSystemsApiContext context)
 {
     return TypedResults.Ok(await context.BuffetRegistrations.ToListAsync());
@@ -169,8 +190,11 @@ static async Task<IResult> CreateRegister(BuffetRegistration buffetRegistration,
 }
 #endregion
 
-
 #region Item
+/**
+ *  Disse metoder definerer hvordan varerne bliver oprettet, ændret, slettet fra systemet.
+ *  Her skal bemærkes at ItemGroupId har en løs forbindelse til ItemGroups, og det er op til brugeren af apiet, at sørge for at dette opfyldes korrekt.
+ */
 static async Task<IResult> GetAllItem(CanteenSystemsApiContext context)
 {
     return TypedResults.Ok(await context.Items.ToListAsync());
@@ -219,6 +243,9 @@ static async Task<IResult> DeleteItem(int id, CanteenSystemsApiContext context)
 #endregion
 
 #region ItemGroups
+/**
+ *  Disse metoder definerer hvordan varegrupperne bliver oprettet, ændret, slettet fra systemet.
+ */
 static async Task<IResult> GetAllItemGroup(CanteenSystemsApiContext context)
 {
     return TypedResults.Ok(await context.ItemsGroup.ToListAsync());
@@ -261,6 +288,10 @@ static async Task<IResult> DeleteItemGroup(int id, CanteenSystemsApiContext cont
 #endregion
 
 #region Catering
+/**
+ *  Disse metoder definerer hvordan der bestilles service.
+ *  Her skal bemærkes at Category har en løs forbindelse til CateringsCategory, og det er op til brugeren af apiet, at sørge for at dette opfyldes korrekt.
+ */
 static async Task<IResult> GetAllCatering(CanteenSystemsApiContext context)
 {
     return TypedResults.Ok(await context.Caterings.ToListAsync());
@@ -311,6 +342,9 @@ static async Task<IResult> DeleteCatering(int id, CanteenSystemsApiContext conte
 #endregion
 
 #region CateringCategory
+/**
+ *  Disse metoder definerer hvordan CateringCategories bliver oprettet, ændret, slettet fra systemet.
+ */
 static async Task<IResult> GetAllCateringCategory(CanteenSystemsApiContext context)
 {
     return TypedResults.Ok(await context.CateringsCategory.ToListAsync());
@@ -354,6 +388,10 @@ static async Task<IResult> DeleteCateringCategory(int id, CanteenSystemsApiConte
 #endregion
 
 #region Order
+/**
+ *  Disse metoder definerer hvordan ordrer bliver oprettet, ændret, slettet fra systemet.
+ *  Ordre er i dette projekt kun tilknyttet Terminal siden.
+ */
 static async Task<IResult> GetAllOrder(CanteenSystemsApiContext context)
 {
     return TypedResults.Ok(await context.Orders.ToListAsync());
@@ -398,6 +436,9 @@ static async Task<IResult> DeleteOrder(int id, CanteenSystemsApiContext context)
 #endregion
 
 #region BuffetMenu
+/**
+ *  Disse metoder definerer hvordan buffetmenuen bliver oprettet, ændret, slettet fra systemet.
+ */
 static async Task<IResult> GetAllBuffetMenu(CanteenSystemsApiContext context)
 {
     return TypedResults.Ok(await context.BuffetMenu.ToListAsync());

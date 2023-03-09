@@ -77,7 +77,7 @@ namespace CanteenSystems
                         default:
                             break;
                     }
-                    if (item.Id > 0) //Update
+                    if (item.Id != null) //Update
                     {
                         StringContent stringContent = new(JsonSerializer.Serialize(item), Encoding.UTF8, "application/json");
                         using HttpClient httpClient = new HttpClient();

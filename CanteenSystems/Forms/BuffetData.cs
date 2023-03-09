@@ -54,6 +54,38 @@ namespace CanteenSystems
                     endDate = DateTime.Now.AddDays(-7);
                     ShowData(DateTime.Now, endDate);
                     break;
+                case 2: // 1 måned
+                    endDate = DateTime.Now.AddMonths(-1);
+                    ShowData(DateTime.Now, endDate);
+                    break;
+                case 3: // 3 måneder
+                    endDate = DateTime.Now.AddMonths(-3);
+                    ShowData(DateTime.Now, endDate);
+                    break;
+                case 4: // 6 måneder
+                    endDate = DateTime.Now.AddMonths(-6);
+                    ShowData(DateTime.Now, endDate);
+                    break;
+                case 5: // 1 år
+                    endDate = DateTime.Now.AddYears(-1);
+                    ShowData(DateTime.Now, endDate);
+                    break;
+                case 6: // 2 år
+                    endDate = DateTime.Now.AddYears(-2);
+                    ShowData(DateTime.Now, endDate);
+                    break;
+                case 7: // 3 år
+                    endDate = DateTime.Now.AddYears(-3);
+                    ShowData(DateTime.Now, endDate);
+                    break;
+                case 8: // 4 år
+                    endDate = DateTime.Now.AddYears(-4);
+                    ShowData(DateTime.Now, endDate);
+                    break;
+                case 9: // 5 år
+                    endDate = DateTime.Now.AddYears(-5);
+                    ShowData(DateTime.Now, endDate);
+                    break;
                 default:
                     break;
             }
