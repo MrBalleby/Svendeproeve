@@ -96,12 +96,14 @@ namespace CanteenSystems
         {
             try
             {
+                selectedData.Clear();
                 List<BuffetRegistration> selected = buffetregistration.FindAll(x=>x.DateTime >= end && x.DateTime <= start);
                 chart_data.Series.Clear();
                 chart_data.Series.Add("AntalGæster");
                 chart_data.Series["AntalGæster"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
                 var averages = selected.GroupBy(grp => grp.DateTime.Date)
                                     .Select(grp => new { Date = grp.Key, Average = grp.Average(it => it.Id) });
+                averages = averages.OrderBy(x => x.Date).ToList();
                 foreach (var item in averages)
                 {
                     selectedData.Add((item.Date,item.Average));
